@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+# https://learn.adafruit.com/max31855-thermocouple-python-library/hardware
 # https://github.com/adafruit/Adafruit_Python_MAX31855
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_MAX31855.MAX31855 as MAX31855
@@ -28,11 +29,11 @@ print '    Internal Temperature: {0:0.3F}*C'.format(internal)
 
 
 
-segment.writeDigit(0, int(hour / 10)) 
-segment.writeDigit(1, hour % 10) 
-segment.writeDigit(3, int(minute / 10))
-segment.writeDigit(4, minute % 10)
+segment.writeDigit(0, int(str(pizza-oven-temperature)[0]) 
+segment.writeDigit(1, int(str(pizza-oven-temperature)[1]) 
+segment.writeDigit(3, int(str(pizza-oven-temperature)[2])
+segment.writeDigit(4, int(str(pizza-oven-temperature)[3])
 
-pizzapi = pizzaapi + "?insidetemp=" + pizza-oven-temperature + "&outsidetemp=" + internal
+pizzaapi = pizzaapi + "?insidetemp=" + pizza-oven-temperature + "&outsidetemp=" + internal
 
-urllib2.urlopen(pizzapi)
+urllib2.urlopen(pizzaapi)
