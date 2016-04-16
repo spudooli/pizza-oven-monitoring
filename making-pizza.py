@@ -28,10 +28,13 @@ def main():
 		while True:
 			pizzaoventemperature = sensor.readTempC()
 			internal = sensor.readInternalC()
+			
 			print 'Thermocouple Temperature: {0:0.3F}*C'.format(pizzaoventemperature)
 			print '    Internal Temperature: {0:0.3F}*C'.format(internal)
-			print pizzaoventemperature
-			display.write_int(6666)
+			
+			pizzaoventemperature = int(pizzaoventemperature)
+
+			display.write_int(pizzaoventemperature)
 
 
 			#pizzaapi = pizzaapi + "?insidetemp=" + pizzaoventemperature + "&outsidetemp=" + internal
