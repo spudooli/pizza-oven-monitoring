@@ -13,7 +13,7 @@ class SevenSegmentI2c():
     def write_byte(self, value):
         #Adding a retry as this seems to fail quite
         #frequently on my setup
-        retry_count = 2
+        retry_count = 4
         while retry_count > 0:
             try:
                 self.bus.write_byte(self.address, value)
@@ -24,7 +24,7 @@ class SevenSegmentI2c():
             except IOError as ex:
                 retry_count = retry_count - 1
                 #add a delay in case the bus was busy
-                time.sleep(0.1)
+                time.sleep(0.2)
                 print 'caught exception writing', hex(value), 'remaining:', retry_count
                 #raise
                 if retry_count <= 0:
