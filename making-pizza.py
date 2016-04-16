@@ -25,6 +25,7 @@ def main():
 		bus = seven_segment_i2c.SevenSegmentI2c(1)
 		display = seven_segment_display.SevenSegmentDisplay(bus)
 		display.clear_display()
+		enable_colon = True
 		while True:
 			pizzaoventemperature = sensor.readTempC()
 			internal = sensor.readInternalC()
@@ -40,7 +41,16 @@ def main():
 			#pizzaapi = pizzaapi + "?insidetemp=" + pizzaoventemperature + "&outsidetemp=" + internal
 
 			#urllib2.urlopen(pizzaapi)
+
+			#make the colon blink every other cycle
+			enable_colon = not enable_colon
+			nondigits = []
+			if enable_colon:
+				nondigits.append(seven_segment_display.DotEnum.DECIMAL_4)
+			display.set_nondigits(nondigits)
+
 			time.sleep(3.0)
+
     except IOError as ex:
         print ex
 
