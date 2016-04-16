@@ -5,15 +5,14 @@
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_MAX31855.MAX31855 as MAX31855
 
-# https://github.com/adafruit/Adafruit-Raspberry-Pi-Python-Code
-from Adafruit_7Segment import SevenSegment
+# http://www.derekscholten.com/2013/09/02/raspberry-pi-sparkfun-7-segment-display-clock/
 
+import seven_segment_display
+import seven_segment_i2c
+import time
 import urllib2
 
-pizzaapi = "https://www.spudooli.com/track/"
-
-segment = SevenSegment(address=0x70)
-
+#pizzaapi = "https://www.spudooli.com/track/"
 
 # Raspberry Pi software SPI configuration.
 CLK = 25
@@ -21,19 +20,27 @@ CS  = 24
 DO  = 18
 sensor = MAX31855.MAX31855(CLK, CS, DO)
 
-pizza-oven-temperature = sensor.readTempC()
-internal = sensor.readInternalC()
-print 'Thermocouple Temperature: {0:0.3F}*C'.format(pizza-oven-temperature)
-print '    Internal Temperature: {0:0.3F}*C'.format(internal)
+def main():
+    try:
+		bus = seven_segment_i2c.SevenSegmentI2c(1)
+		display = seven_segment_display.SevenSegmentDisplay(bus)
+		display.clear_display()
+		while True:
+			pizzaoventemperature = sensor.readTempC()
+			internal = sensor.readInternalC()
+			print 'Thermocouple Temperature: {0:0.3F}*C'.format(pizzaoventemperature)
+			print '    Internal Temperature: {0:0.3F}*C'.format(internal)
+			print pizzaoventemperature
+			display.write_int(6666)
 
 
+			#pizzaapi = pizzaapi + "?insidetemp=" + pizzaoventemperature + "&outsidetemp=" + internal
 
+			#urllib2.urlopen(pizzaapi)
+			time.sleep(3.0)
+    except IOError as ex:
+        print ex
 
-segment.writeDigit(0, int(str(pizza-oven-temperature)[0]) 
-segment.writeDigit(1, int(str(pizza-oven-temperature)[1]) 
-segment.writeDigit(3, int(str(pizza-oven-temperature)[2])
-segment.writeDigit(4, int(str(pizza-oven-temperature)[3])
-
-pizzaapi = pizzaapi + "?insidetemp=" + pizza-oven-temperature + "&outsidetemp=" + internal
-
-urllib2.urlopen(pizzaapi)
+        
+if  __name__ =='__main__':
+    main()
