@@ -62,5 +62,6 @@ def senddata(pizzaoventemperature, internal):
 	pizzaapi = pizzaapi + "?insidetemp=" + str(pizzaoventemperature) + "&outsidetemp=" + str(internal)
 	urllib2.urlopen(pizzaapi)
         print pizzaapi
+	pizzaapi = "http://www.spudooli.com/track/pizza.php"
 if  __name__ =='__main__':
     main()
